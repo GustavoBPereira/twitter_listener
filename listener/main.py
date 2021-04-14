@@ -2,7 +2,7 @@ import sys
 
 import tweepy
 
-from listener import api
+from authentication import twitter_api
 
 
 class MyStreamListener(tweepy.StreamListener):
@@ -17,9 +17,9 @@ class MyStreamListener(tweepy.StreamListener):
         return False
 
     def on_status(self, status):
-        print('>>>>>>>>>>>>>>>>>>>>>>>>')
+        print('>' * 20)
         print(status.text)
-        print('<<<<<<<<<<<<<<<<<<<<<<<<')
+        print('>' * 20)
 
     def on_delete(self, status_id, user_id):
         print('Deleted tweet')
@@ -29,7 +29,7 @@ class MyStreamListener(tweepy.StreamListener):
 
 if __name__ == '__main__':
     listener = MyStreamListener()
-    stream = tweepy.Stream(auth=api.auth, listener=listener)
+    stream = tweepy.Stream(auth=twitter_api.auth, listener=listener)
     try:
         print('starting')
         stream.filter(follow=["841403804109148160"])

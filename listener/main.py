@@ -3,6 +3,7 @@ import sys
 import tweepy
 
 from authentication import twitter_api
+from telegram_bot.main import send_message_to_chat
 
 
 class MyStreamListener(tweepy.StreamListener):
@@ -17,14 +18,14 @@ class MyStreamListener(tweepy.StreamListener):
         return False
 
     def on_status(self, status):
-        print('>' * 20)
-        print(status.text)
-        print('>' * 20)
+        msg = f'{status.user.screen_name}:\n'
+        msg += f'{status.text}'
+        send_message_to_chat(msg)
 
     def on_delete(self, status_id, user_id):
-        print('Deleted tweet')
-        print(f'status_id: {status_id}')
-        print(f'user_id: {user_id}')
+        msg = f'Tweet deletado\n'
+        msg += f'User id:{user_id}'
+        send_message_to_chat(msg)
 
 
 if __name__ == '__main__':
